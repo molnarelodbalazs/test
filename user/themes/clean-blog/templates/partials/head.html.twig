@@ -33,9 +33,9 @@
 {{ assets.css() }}
 
 {% block javascripts %}
-    {% do assets.addJs('theme://vendor/jquery/jquery.min.js', {'group':'bottom'}) %}
-    {% do assets.addJs('theme://vendor/bootstrap/js/bootstrap.min.js', {'group':'bottom'}) %}
-    {% do assets.addJs('theme://js/clean-blog.min.js', {'group':'bottom'}) %}
+    {% do assets.addJs('jquery', 101) %}
+    {% do assets.addJs('theme://vendor/bootstrap/js/bootstrap.min.js', 100) %}
+    {% do assets.addJs('theme://js/clean-blog.min.js') %}
 
     {% if browser.getBrowser == 'msie' and browser.getVersion < 9 %}
         {% do assets.addJs('https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js') %}
@@ -43,4 +43,20 @@
     {% endif %}
 {% endblock %}
 
-{{ assets.js() }}
+{# Site URL is not correct if Grav is in subfolder #}
+{% set site_url = base_url_absolute|replace({(base_url): ''}) %}
+
+{% if page.header.header_image %}
+    {% set og_image = site_url ~  page.media.images[page.header.header_image].cache.url() %}
+{% elseif page.media.images|length > 0 %}
+    {% set og_image = site_url ~  page.media.images|first.cache.url() %}
+{% else %}
+    {% set og_image = '' %}
+{% endif %}
+
+<meta property="og:url" content="{{ page.url(true) }}" />
+<meta property="og:title" content="{{ page.title|e('html_attr') }}" />
+<meta property="og:description" content="{{ page.header.metadata.description|e('html_attr') }}" />
+{% if og_image is not empty %}
+<meta property="og:image" content="{{ og_image }}" />
+{% endif %}

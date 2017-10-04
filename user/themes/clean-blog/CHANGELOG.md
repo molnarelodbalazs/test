@@ -1,3 +1,24 @@
+# v1.4.1
+## 27/05/2017
+
+1. [](#bugfix)
+    * Fixed issue in language file
+
+
+# v1.4.0
+## 24/05/2017
+
+1. [](#new)
+    * Added Open Graph properties
+
+
+# v1.3.1
+## 10/05/2017
+
+1. [](#bugfix)
+    * Fixed issue with JavaScript assets
+
+
 # v1.3.0
 ## 16/02/2017
 
